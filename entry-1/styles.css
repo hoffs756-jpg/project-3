@@ -1,0 +1,395 @@
+/* ── Reset & base ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:       #f5f6f8;
+  --surface:  #ffffff;
+  --border:   #e4e7ed;
+  --text:     #1a1e2e;
+  --muted:    #8a92a6;
+  --accent:   #1c4ed8;
+  --accent-light: #eff4ff;
+  --shadow:   0 2px 12px rgba(0,0,0,0.07);
+  --radius:   14px;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Page wrapper ───────────────────────────────────────────── */
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+header {
+  background: var(--text);
+  color: #fff;
+  padding: 48px 24px 40px;
+  text-align: center;
+}
+
+.header-eyebrow {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7ba7ff;
+  margin-bottom: 10px;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.subtitle {
+  margin-top: 8px;
+  color: #9aa5bf;
+  font-size: 0.95rem;
+  font-weight: 300;
+}
+
+/* ── Main container ─────────────────────────────────────────── */
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+  flex: 1;
+}
+
+/* ── Borough buttons ────────────────────────────────────────── */
+.borough-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.borough-btn {
+  padding: 9px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  background: var(--surface);
+  color: var(--muted);
+  font-family: 'Lato', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  letter-spacing: 0.02em;
+}
+
+.borough-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+.borough-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ── Error / Loading ────────────────────────────────────────── */
+.error-msg {
+  color: #c0392b;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  min-height: 20px;
+}
+
+.loading-wrap {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Current weather card ───────────────────────────────────── */
+.current-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+  animation: fadeUp 0.3s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.current-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.big-icon {
+  font-size: 3.2rem;
+  line-height: 1;
+}
+
+.current-left h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.desc-text {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.current-right {
+  text-align: right;
+}
+
+.big-temp {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.feels {
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin-top: 6px;
+}
+
+/* ── Stats row ──────────────────────────────────────────────── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+  animation: fadeUp 0.35s ease;
+}
+
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  box-shadow: var(--shadow);
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stat-val {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* ── Section title ──────────────────────────────────────────── */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+/* ── Hourly strip ───────────────────────────────────────────── */
+#hourlySection {
+  margin-bottom: 28px;
+  animation: fadeUp 0.4s ease;
+}
+
+.hourly-scroll {
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.hourly-scroll::-webkit-scrollbar { height: 4px; }
+.hourly-scroll::-webkit-scrollbar-track { background: transparent; }
+.hourly-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.hourly-row {
+  display: flex;
+  gap: 10px;
+  min-width: max-content;
+  padding: 2px 1px;
+}
+
+.hour-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  text-align: center;
+  min-width: 68px;
+  box-shadow: var(--shadow);
+  transition: border-color 0.15s;
+}
+
+.hour-card:hover {
+  border-color: var(--accent);
+}
+
+.hour-time {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.hour-icon {
+  font-size: 1.35rem;
+  margin: 6px 0;
+}
+
+.hour-temp {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.hour-rain {
+  font-size: 0.7rem;
+  color: var(--accent);
+  margin-top: 3px;
+}
+
+/* ── 7-day forecast grid ────────────────────────────────────── */
+#forecastSection {
+  animation: fadeUp 0.45s ease;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.day-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 10px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.day-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.day-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.day-icon {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+
+.day-high {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.day-low {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.day-rain {
+  font-size: 0.7rem;
+  color: var(--accent);
+  margin-top: 6px;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  header { padding: 32px 16px 28px; }
+
+  .current-card { flex-direction: column; align-items: flex-start; padding: 20px; }
+  .current-right { text-align: left; }
+
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+
+  .forecast-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 400px) {
+  .forecast-grid { grid-template-columns: repeat(3, 1fr); }
+  .borough-bar { gap: 6px; }
+  .borough-btn { padding: 8px 13px; font-size: 0.82rem; }
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>project 3</title>
+
+
+    <link rel="icon" type="image/x-icon" href="">
+
+
+
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="page">
+
+    <header>
+      <div class="header-inner">
+        <div class="header-eyebrow">New York City</div>
+        <h1>Borough Weather</h1>
+        <p class="subtitle">Live forecasts across the five boroughs</p>
+      </div>
+    </header>
+
+    <main class="container">
+
+      <!-- Borough selector -->
+      <div class="borough-bar">
+        <button class="borough-btn active" data-borough="Manhattan">Manhattan</button>
+        <button class="borough-btn" data-borough="Brooklyn">Brooklyn</button>
+        <button class="borough-btn" data-borough="Queens">Queens</button>
+        <button class="borough-btn" data-borough="Bronx">The Bronx</button>
+        <button class="borough-btn" data-borough="Staten Island">Staten Island</button>
+      </div>
+
+      <!-- Status messages -->
+      <p id="errorMsg" class="error-msg"></p>
+      <div id="loading" class="loading-wrap">
+        <div class="spinner"></div>
+        <span>Fetching weather…</span>
+      </div>
+
+      <!-- Current weather -->
+      <div id="currentCard" class="current-card" style="display:none">
+        <div class="current-left">
+          <div id="mainIcon" class="big-icon"></div>
+          <div>
+            <h2 id="cityName"></h2>
+            <p id="description" class="desc-text"></p>
+          </div>
+        </div>
+        <div class="current-right">
+          <div id="temperature" class="big-temp"></div>
+          <div id="feelsLike" class="feels"></div>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div id="statsRow" class="stats-row" style="display:none">
+        <div class="stat"><span class="stat-label">Humidity</span><span class="stat-val" id="humidity"></span></div>
+        <div class="stat"><span class="stat-label">Wind</span><span class="stat-val" id="wind"></span></div>
+        <div class="stat"><span class="stat-label">Pressure</span><span class="stat-val" id="pressure"></span></div>
+        <div class="stat"><span class="stat-label">UV Index</span><span class="stat-val" id="uv"></span></div>
+        <div class="stat"><span class="stat-label">Sunrise</span><span class="stat-val" id="sunrise"></span></div>
+        <div class="stat"><span class="stat-label">Sunset</span><span class="stat-val" id="sunset"></span></div>
+      </div>
+
+      <!-- Hourly -->
+      <div id="hourlySection" style="display:none">
+        <h3 class="section-title">Next 24 Hours</h3>
+        <div class="hourly-scroll">
+          <div id="hourlyRow" class="hourly-row"></div>
+        </div>
+      </div>
+
+      <!-- 7-day forecast -->
+      <div id="forecastSection" style="display:none">
+        <h3 class="section-title">7-Day Forecast</h3>
+        <div id="forecastGrid" class="forecast-grid"></div>
+      </div>
+
+    </main>
+
+    <footer>
+      Weather data · <a href="https://open-meteo.com" target="_blank">Open-Meteo</a> · Free, no API key required
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
