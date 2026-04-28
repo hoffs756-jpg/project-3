@@ -1,19 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>project 3</title>
-  <link rel="icon" type="image/x-icon" href="cirlceblue.jpg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>project 3</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 
-
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>weather api</h1>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div id="grain"></div>
+
+<canvas id="particles"></canvas>
+
+<div id="atmosphere">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<span class="vert-label">New York City — Live Atmosphere</span>
+
+<!-- Intro -->
+<div id="intro">
+  <div class="intro-city">New York<br><em>City</em></div>
+  <p class="intro-sub">An atmospheric weather experience</p>
+  <button class="listen-btn" onclick="enterExperience()">Feel the weather</button>
+</div>
+
+<!-- Main view -->
+<div id="weather-view">
+  <div id="sense-panel">
+    <div class="condition-word" id="conditionWord">
+      <span id="conditionText">—</span>
+    </div>
+    <p class="sense-desc" id="senseDesc"></p>
+    <div class="wave-viz" id="waveViz">
+      <div class="wave-bar" style="animation-delay:0s"></div>
+      <div class="wave-bar" style="animation-delay:0.15s"></div>
+      <div class="wave-bar" style="animation-delay:0.3s"></div>
+      <div class="wave-bar" style="animation-delay:0.45s"></div>
+      <div class="wave-bar" style="animation-delay:0.6s"></div>
+      <div class="wave-bar" style="animation-delay:0.75s"></div>
+      <div class="wave-bar" style="animation-delay:0.9s"></div>
+    </div>
+  </div>
+
+  <div id="data-panel">
+    <div class="data-label">Right now</div>
+    <div class="data-temp" id="tempDisplay">—<sup>°</sup></div>
+
+    <div class="data-meta" id="dataMeta">
+      <div class="meta-item">
+        <span class="meta-val" id="condText">—</span>
+        <span class="meta-key">Conditions</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-val" id="highToday">—°</span>
+        <span class="meta-key">Today's High</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-val" id="rainChance">—%</span>
+        <span class="meta-key">Rain Chance</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-val" id="dayNight">—</span>
+        <span class="meta-key">Time of Day</span>
+      </div>
+    </div>
+
+    <div class="divider" id="divider"></div>
+    <div class="forecast-row" id="forecastRow"></div>
+  </div>
+
+  <div id="bottom-bar">
+    <span class="bottom-loc">40.7128° N, 74.0060° W</span>
+    <span class="bottom-time" id="liveTime"></span>
+    <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">
+      <div class="sound-dot" id="soundDot"></div>
+      <span id="soundLabel">Atmosphere on</span>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
