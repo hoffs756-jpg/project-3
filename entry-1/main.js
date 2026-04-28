@@ -290,6 +290,52 @@ function applyTheme(theme) {
   document.documentElement.style.setProperty('--orb2', theme.orb2);
   document.documentElement.style.setProperty('--orb3', theme.orb3);
   document.documentElement.style.setProperty('--accent', theme.orb1);
+
+  // ── DEV: Preview any theme ──
+const themeKeys = ['cloudy', 'rainy', 'sunny', 'clear', 'snowy', 'stormy'];
+
+function previewTheme(condKey) {
+  const theme = themes[condKey];
+  if (!theme) return;
+
+  // update active button state
+  document.querySelectorAll('.dev-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.theme === condKey);
+  });
+
+  // swap orb colours
+  applyTheme(theme);
+
+  // animate condition word out then back in
+  const wordEl = document.getElementById('conditionWord');
+  const textEl = document.getElementById('conditionText');
+  wordEl.classList.remove('revealed');
+  setTimeout(() => {
+    textEl.textContent = theme.word;
+    wordEl.classList.add('revealed');
+  }, 200);
+
+  // crossfade description
+  const desc = document.getElementById('senseDesc');
+  desc.style.opacity = '0';
+  setTimeout(() => {
+    desc.textContent = theme.desc;
+    desc.style.opacity = '1';
+  }, 300);
+
+  // swap ambient sound
+  if (soundEnabled && audioCtx) startAtmosphereSound(theme.soundType);
+}
+
+// keyboard shortcuts: 1–6
+document.addEventListener('keydown', e => {
+  const idx = parseInt(e.key) - 1;
+  if (idx >= 0 && idx < themeKeys.length) previewTheme(themeKeys[idx]);
+});
+
+function showSwitcher() {
+  document.getElementById('dev-switcher').classList.add('visible');
+}
   
   // show orbs
   document.querySelectorAll('.orb').forEach((o,i) => {
@@ -318,6 +364,51 @@ function populateWeather() {
   // apply theme
   applyTheme(theme);
  
+  // ── DEV: Preview any theme ──
+const themeKeys = ['cloudy', 'rainy', 'sunny', 'clear', 'snowy', 'stormy'];
+
+function previewTheme(condKey) {
+  const theme = themes[condKey];
+  if (!theme) return;
+
+  // update active button state
+  document.querySelectorAll('.dev-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.theme === condKey);
+  });
+
+  // swap orb colours
+  applyTheme(theme);
+
+  // animate condition word out then back in
+  const wordEl = document.getElementById('conditionWord');
+  const textEl = document.getElementById('conditionText');
+  wordEl.classList.remove('revealed');
+  setTimeout(() => {
+    textEl.textContent = theme.word;
+    wordEl.classList.add('revealed');
+  }, 200);
+
+  // crossfade description
+  const desc = document.getElementById('senseDesc');
+  desc.style.opacity = '0';
+  setTimeout(() => {
+    desc.textContent = theme.desc;
+    desc.style.opacity = '1';
+  }, 300);
+
+  // swap ambient sound
+  if (soundEnabled && audioCtx) startAtmosphereSound(theme.soundType);
+}
+
+// keyboard shortcuts: 1–6
+document.addEventListener('keydown', e => {
+  const idx = parseInt(e.key) - 1;
+  if (idx >= 0 && idx < themeKeys.length) previewTheme(themeKeys[idx]);
+});
+
+function showSwitcher() {
+  document.getElementById('dev-switcher').classList.add('visible');
+}
   // condition word
   document.getElementById('conditionText').textContent = theme.word;
   setTimeout(() => {
@@ -376,16 +467,14 @@ function populateWeather() {
 function enterExperience() {
   initAudio();
   soundEnabled = true;
-  
   document.getElementById('intro').classList.add('hidden');
- 
   const view = document.getElementById('weather-view');
   view.classList.add('visible');
- 
   populateWeather();
- 
   const theme = themes.cloudy;
   startAtmosphereSound(theme.soundType);
+
+  setTimeout(showSwitcher, 1800); // ← add this line
 }
  
 // ── Cursor ──
