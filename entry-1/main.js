@@ -313,9 +313,7 @@ document.addEventListener('keydown', e => {
   if (idx >= 0 && idx < themeKeys.length) previewTheme(themeKeys[idx]);
 });
 
-function showSwitcher() {
-  document.getElementById('dev-switcher').classList.add('visible');
-}
+
 
 // ── Enter experience ──
 function enterExperience() {
@@ -325,7 +323,7 @@ function enterExperience() {
   document.getElementById('weather-view').classList.add('visible');
   populateWeather();
   startAtmosphereSound(themes.cloudy.soundType);
-  setTimeout(showSwitcher, 1800);
+
 }
 
 // ── Cursor ──
