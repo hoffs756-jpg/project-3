@@ -1,17 +1,52 @@
-// ── Weather data ──
-const weatherData = {
-  temp: 58,
-  condition: 'cloudy',
-  conditionText: 'Mostly Cloudy',
-  isDay: true,
-  forecast: [
-    { day: 'Tue', high: 63, rain: 10 },
-    { day: 'Wed', high: 53, rain: 20 },
-    { day: 'Thu', high: 60, rain: 25 },
-    { day: 'Fri', high: 59, rain: 45 },
-    { day: 'Sat', high: 57, rain: 10 },
-  ]
-};
+// ── Fetch real NYC weather from Open-Meteo ──
+async function fetchWeather() {
+  const url = 'https://api.open-meteo.com/v1/forecast'
+    + '?latitude=40.7128&longitude=-74.0060'
+    + '&current=temperature_2m,weathercode,is_day'
+    + '&daily=temperature_2m_max,precipitation_probability_max'
+    + '&temperature_unit=fahrenheit'
+    + '&timezone=America%2FNew_York'
+    + '&forecast_days=5';
+
+  const res  = await fetch(url);
+  const json = await res.json();
+  const code = json.current.weathercode;
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+  return {
+    temp:          Math.round(json.current.temperature_2m),
+    condition:     codeToCondition(code),
+    conditionText: codeToText(code),
+    isDay:         json.current.is_day === 1,
+    forecast:      json.daily.time.map((t, i) => ({
+      day:  days[new Date(t).getDay()],
+      high: Math.round(json.daily.temperature_2m_max[i]),
+      rain: json.daily.precipitation_probability_max[i] ?? 0,
+    }))
+  };
+}
+
+function codeToCondition(code) {
+  if (code === 0)  return 'clear';
+  if (code <= 2)   return 'sunny';
+  if (code <= 48)  return 'cloudy';
+  if (code <= 67)  return 'rainy';
+  if (code <= 77)  return 'snowy';
+  if (code <= 82)  return 'rainy';
+  return 'stormy';
+}
+
+function codeToText(code) {
+  if (code === 0)  return 'Clear Sky';
+  if (code <= 2)   return 'Partly Cloudy';
+  if (code <= 3)   return 'Overcast';
+  if (code <= 48)  return 'Foggy';
+  if (code <= 55)  return 'Drizzle';
+  if (code <= 67)  return 'Rainy';
+  if (code <= 77)  return 'Snowy';
+  if (code <= 82)  return 'Showers';
+  return 'Thunderstorm';
+}
 
 // ── Atmospheric themes ──
 const themes = {
@@ -238,8 +273,7 @@ function applyTheme(theme) {
 }
 
 // ── Populate UI ──
-function populateWeather() {
-  const d = weatherData;
+function populateWeather(d) {
   const condKey = d.condition.toLowerCase().includes('rain') ? 'rainy' :
                   d.condition.toLowerCase().includes('cloud') ? 'cloudy' :
                   d.condition.toLowerCase().includes('snow') ? 'snowy' :
@@ -288,15 +322,12 @@ function populateWeather() {
   if (soundEnabled) startAtmosphereSound(theme.soundType);
 }
 
-// ── DEV: Theme switcher ──
+// ── DEV: Theme switcher (keys 1–6, no visible UI) ──
 const themeKeys = ['cloudy', 'rainy', 'sunny', 'clear', 'snowy', 'stormy'];
 
 function previewTheme(condKey) {
   const theme = themes[condKey];
   if (!theme) return;
-  document.querySelectorAll('.dev-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.theme === condKey);
-  });
   applyTheme(theme);
   const wordEl = document.getElementById('conditionWord');
   const textEl = document.getElementById('conditionText');
@@ -313,17 +344,15 @@ document.addEventListener('keydown', e => {
   if (idx >= 0 && idx < themeKeys.length) previewTheme(themeKeys[idx]);
 });
 
-
-
 // ── Enter experience ──
-function enterExperience() {
+async function enterExperience() {
   initAudio();
   soundEnabled = true;
   document.getElementById('intro').classList.add('hidden');
   document.getElementById('weather-view').classList.add('visible');
-  populateWeather();
+  const weatherData = await fetchWeather();
+  populateWeather(weatherData);
   startAtmosphereSound(themes.cloudy.soundType);
-
 }
 
 // ── Cursor ──
