@@ -1,4 +1,3 @@
-// ── Fetch real NYC weather from Open-Meteo ──
 async function fetchWeather() {
   const url = 'https://api.open-meteo.com/v1/forecast'
     + '?latitude=40.7128&longitude=-74.0060'
@@ -48,7 +47,6 @@ function codeToText(code) {
   return 'Thunderstorm';
 }
 
-// ── Atmospheric themes ──
 const themes = {
   sunny: {
     word: 'Luminous',
@@ -88,7 +86,6 @@ const themes = {
   }
 };
 
-// ── Audio engine ──
 let audioCtx = null;
 let soundNodes = [];
 let soundEnabled = false;
@@ -186,7 +183,7 @@ function toggleSound() {
   }
 }
 
-// ── Particle canvas ──
+
 const canvas = document.getElementById('particles');
 const ctx2d = canvas.getContext('2d');
 let particles = [];
@@ -272,7 +269,7 @@ function applyTheme(theme) {
   drawParticles();
 }
 
-// ── Populate UI ──
+
 function populateWeather(d) {
   const condKey = d.condition.toLowerCase().includes('rain') ? 'rainy' :
                   d.condition.toLowerCase().includes('cloud') ? 'cloudy' :
@@ -322,7 +319,6 @@ function populateWeather(d) {
   if (soundEnabled) startAtmosphereSound(theme.soundType);
 }
 
-// ── DEV: Theme switcher (keys 1–6, no visible UI) ──
 const themeKeys = ['cloudy', 'rainy', 'sunny', 'clear', 'snowy', 'stormy'];
 
 function previewTheme(condKey) {
